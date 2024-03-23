@@ -13,7 +13,7 @@ app.set('layout', './layouts/main');
 app.set('view engine', 'ejs');
 
 // Static Files
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 // Body Paeser
 app.use(express.urlencoded({ extended: true }));
