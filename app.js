@@ -1,18 +1,29 @@
-const express = require('express');
+require('dotenv').config();
 const path = require('path');
+const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
+
+const indexRozter = require('./server/routes/indexRouter');
 
 const app = express();
 
+// Template Engine
+app.use(expressLayouts);
+app.set('layout', './layouts/main');
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
 
+// Static Files
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  res.send('Hallo notes ');
-});
+// Body Paeser
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-const port = 3000;
+// Routes
+app.use('/', indexRozter);
+
+// Start Server
+const port = 3000 || process.env.PORT;
 app.listen(port, () => {
   console.log(`Your app run on port 3000`);
 });
