@@ -8,7 +8,10 @@ exports.getHome = async (req, res) => {
       title: 'NodeJs | Notes',
       description: 'NodeJs Notes Project',
     };
-    res.render('index', locals);
+    res.render('index', {
+      locals,
+      layout: '../views/layouts/front-page',
+    });
   } catch (err) {
     console.log(err);
   }

@@ -1,4 +1,19 @@
 body {
   color: #eaeaea;
   background: linear-gradient(0.25turn, #34626c, #c6b497);
+  font-weight: 400;
+  font-family: 'Poppins';
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 100;
+}
+
+.img-ui {
+  width: 20rem;
+  height: 20rem;
 }
