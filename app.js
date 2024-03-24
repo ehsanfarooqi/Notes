@@ -4,6 +4,7 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 
 const indexRozter = require('./server/routes/indexRouter');
+const dashboardRouter = require('./server/routes/dashboardRouter');
 
 const app = express();
 
@@ -21,6 +22,11 @@ app.use(express.json());
 
 // Routes
 app.use('/', indexRozter);
+app.use('/', dashboardRouter);
+
+app.get('*', (req, res) => {
+  res.status(404).render('404');
+});
 
 // Start Server
 const port = 3000 || process.env.PORT;
