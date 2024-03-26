@@ -4,14 +4,25 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
-const mongoStore = require('connect-mongo');
 
 const indexRozter = require('./server/routes/indexRouter');
 const dashboardRouter = require('./server/routes/dashboardRouter');
 const authRouter = require('./server/routes/authRouter');
 const connectDB = require('./server/config/db');
+const MongoStore = require('connect-mongo');
 
 const app = express();
+
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.DATABASE,
+    }),
+  })
+);
 
 // Passport Session
 app.use(passport.initialize());
