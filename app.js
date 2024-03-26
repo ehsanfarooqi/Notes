@@ -5,8 +5,12 @@ const expressLayouts = require('express-ejs-layouts');
 
 const indexRozter = require('./server/routes/indexRouter');
 const dashboardRouter = require('./server/routes/dashboardRouter');
+const connectDB = require('./server/config/db');
 
 const app = express();
+
+// DB Connection
+connectDB();
 
 // Template Engine
 app.use(expressLayouts);
