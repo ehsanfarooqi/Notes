@@ -2,12 +2,20 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const session = require('express-session');
+const passport = require('passport');
+const mongoStore = require('connect-mongo');
 
 const indexRozter = require('./server/routes/indexRouter');
 const dashboardRouter = require('./server/routes/dashboardRouter');
+const authRouter = require('./server/routes/authRouter');
 const connectDB = require('./server/config/db');
 
 const app = express();
+
+// Passport Session
+app.use(passport.initialize());
+app.use(passport.session());
 
 // DB Connection
 connectDB();
@@ -27,6 +35,7 @@ app.use(express.json());
 // Routes
 app.use('/', indexRozter);
 app.use('/', dashboardRouter);
+app.use('/', authRouter);
 
 app.get('*', (req, res) => {
   res.status(404).render('404');
