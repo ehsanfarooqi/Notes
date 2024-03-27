@@ -1,8 +1,12 @@
 const express = require('express');
 const dashboardController = require('../controller/dashboardController');
+const { isLoggedIn } = require('../middleware/checkAuth');
 
 const router = express.Router();
 
-router.get('/dashboard', dashboardController.getDashboard);
+/**
+ * Dashhboard Routes
+ */
+router.get('/dashboard', isLoggedIn, dashboardController.getDashboard);
 
 module.exports = router;

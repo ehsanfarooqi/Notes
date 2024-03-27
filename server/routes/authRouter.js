@@ -57,6 +57,18 @@ router.get('/login-failure', (req, res) => {
   res.send('Something went wrong..');
 });
 
+// Destory user session
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.log(err);
+      res.send('Error loggin out');
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
 // Presist user data after successful authentication
 passport.serializeUser(function (user, done) {
   done(null, user.id);
