@@ -12,7 +12,6 @@ exports.getDashboard = async (req, res) => {
     };
 
     const notes = await Notes.find();
-    console.log(notes);
     res.render('dashboard/index', {
       userName: req.user.firstName,
       locals,

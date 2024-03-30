@@ -4,8 +4,36 @@
       <h1>Hey, <%= userName %></h1>
     </div>
     <div class="col text-end">
-      <a href="/dashboard/ad" class="btn btn-secondary">+ Add Notes</a>
+      <a href="/dashboard/add" class="btn btn-secondary">+ Add Notes</a>
     </div>
   </div>
-  <div class="row"></div>
+  <div class="row">
+    <% if (notes.length > 0) { for(let i = 0; i < notes.length; i++) { %>
+    <div class="col-sm-3 mb-4">
+      <div class="card border-secondary" style="min-height: 210px; color: #000">
+        <a
+          href="/dashboard/add<%= notes[i]._id %>"
+          class="card-body text-decoration-none"
+        >
+          <h5 class="card-title"><%= notes[i].title %></h5>
+          <p class="card-text"><%= notes[i].body %></p>
+        </a>
+      </div>
+    </div>
+    <% }} else { %>
+    <div class="row">
+      <div class="col-3">
+        <img src="/img/human.png" alt="Human image" class="img-human" />
+      </div>
+      <div class="col mt-md-4">
+        <h2>Okay...</h2>
+        <h4>
+          Let's start with your first notes! <br /><br />
+          <a href="/dashboard/add">Create One!</a>
+        </h4>
+      </div>
+    </div>
+
+    <% } %>
+  </div>
 </div>
