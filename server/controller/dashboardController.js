@@ -81,7 +81,7 @@ exports.getViewNotes = async (req, res, next) => {
 };
 
 /**
- * GET /
+ * PUT /
  * Update Notes
  */
 exports.getUpdateNotes = async (req, res, next) => {
@@ -89,4 +89,106 @@ exports.getUpdateNotes = async (req, res, next) => {
     title: 'Dashboard - NodeJs | Update Notes',
     description: 'NodeJs Notes Project',
   };
+  try {
+    await Notes.findByIdAndUpdate(
+      { _id: req.params.id },
+      { title: req.body.title, body: req.body.body }
+    ).where({ user: req.user.id });
+    res.redirect('/dashboard');
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+/**
+ * Delete /
+ * Delete Notes
+ */
+exports.deleteNote = async (req, res, next) => {
+  try {
+    await Notes.findByIdAndDelete({ _id: req.params.id }).where({
+      user: req.user.id,
+    });
+    res.redirect('/dashboard');
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+/**
+ * Get /
+ * Get Add Notes
+ */
+exports.getAddNote = async (req, res, next) => {
+  locals = {
+    title: 'Dashboard - NodeJs | Update Notes',
+    description: 'NodeJs Notes Project',
+  };
+  try {
+    res.render('dashboard/add', {
+      locals,
+      layout: '../views/layouts/dashboard',
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+/**
+ * POST /
+ * Create New Notes
+ */
+exports.createNote = async (req, res, next) => {
+  try {
+    req.body.user = req.user.id;
+    await Notes.create(req.body);
+    res.redirect('/dashboard');
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+/**
+ * GET /
+ * Get Search Notes
+ */
+exports.getSearch = async (req, res, next) => {
+  try {
+    const searchResult = await Notes.find();
+    res.render('dashboard/search', {
+      searchResult: '',
+      layout: '../views/layouts/dashboard',
+    });
+  } catch {
+    console.log(err);
+  }
+};
+
+/**
+ * POST /
+ * Search Notes
+ */
+exports.searchNote = async (req, res, next) => {
+  const locals = {
+    title: 'Search Note | NodeJs',
+    description: 'NodeJs Notes Project',
+  };
+  try {
+    let searchTerm = req.body.searchTerm;
+    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g, '');
+
+    const notes = await Notes.find({
+      $or: [
+        { title: { $regex: new RegExp(searchNoSpecialChar, 'i') } },
+        { body: { $regex: new RegExp(searchNoSpecialChar, 'i') } },
+      ],
+    }).where({ user: req.user.id });
+    res.render('dashboard/search', {
+      notes,
+      locals,
+      layout: '../views/layouts/dashboard',
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };

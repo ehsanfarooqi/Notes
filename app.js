@@ -4,6 +4,7 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
 const passport = require('passport');
+const methodOverride = require('method-override');
 
 const indexRozter = require('./server/routes/indexRouter');
 const dashboardRouter = require('./server/routes/dashboardRouter');
@@ -42,6 +43,9 @@ app.use(express.static('public'));
 // Body Paeser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Method Override
+app.use(methodOverride('_method'));
 
 // Routes
 app.use('/', indexRozter);

@@ -28,7 +28,7 @@
     </div>
   </div>
   <form
-    action="/dashboard/item/<%= noteId %>"
+    action="/dashboard/item/<%= noteId %>?_method=PUT"
     method="POST"
     class="position-relative"
   >
@@ -89,7 +89,7 @@
           Close
         </button>
         <form
-          action="/edit/<%= note._id %>?_method=DELETE"
+          action="/dashboard/item-delete/<%= noteId %>?_method=DELETE"
           method="POST"
           class="position-relative"
         >

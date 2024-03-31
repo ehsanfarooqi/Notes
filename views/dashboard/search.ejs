@@ -1,0 +1,13 @@
+<div class="container-fluid pb-5 mb-5">
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+    <% if (notes != '') { %> <% notes.forEach( note => { %>
+
+    <a style="color: darkslategrey" href="/dashboard/item/<%= note._id %>">
+      <h4><%= note.title %></h4>
+    </a>
+
+    <% }) %> <% } else { %>
+    <p>No Item Found...</p>
+    <% } %>
+  </div>
+</div>
